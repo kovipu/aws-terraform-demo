@@ -13,3 +13,12 @@ provider "aws" {
   profile = "default"
   region  = "eu-north-1"
 }
+
+resource "aws_instance" "instance" {
+  ami           = "ami-06982ac8da9099c13"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "ExampleInstance"
+  }
+}

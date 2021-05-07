@@ -6,13 +6,13 @@ For this demo, you'll need
 * A computer running macOS, Linux or Windows
 * An AWS account
 
-### 1. Prerequisities
+## 1. Prerequisities
 
-#### Installing Terraform
+### Installing Terraform
 
 Install Terraform. I suggest using [tfenv](https://github.com/tfutils/tfenv) - Terraform version manager.
 
-#### Configure AWS
+### Configure AWS
 
 Install AWS CLI, as per [Amazon's docs](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
 
@@ -23,16 +23,16 @@ Configure AWS CLI with your Access Key.
 aws configure
 ```
 
-### 2. Initialize the Terraform project.
+## 2. Initialize the Terraform project.
 
-#### Set up a new directory for the project
+### Set up a new directory for the project
 
 Initialize a new Terraform project in a new directory.
 ```
 mkdir terraform-demo && cd terraform-demo
 ```
 
-#### Add an AWS provider
+### Add an AWS provider
 
 Create a `main.tf` file, and add the following.
 ```hcl
@@ -56,4 +56,21 @@ provider "aws" {
 Then initialize your prodect to install the provider.
 ```
 terraform init
+```
+
+## 3. Build AWS infrastructure
+
+Now we are ready to build AWS infrastructure using Terraform.
+In this example, we'll be creating an EC2-instance and allowing SSH-access to it.
+
+Add the following configuration to `main.tf`.
+```hcl
+resource "aws_instance" "instance" {
+  ami           = "ami-06982ac8da9099c13"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "ExampleInstance"
+  }
+}
 ```
