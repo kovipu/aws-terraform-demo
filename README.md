@@ -100,3 +100,21 @@ module "example_instane" {
   instance_name = "ExampleInstance"
 }
 ```
+
+Now we can fire up the shiny new instance. The new module definition requires us to rerun `terraform init`.
+After the init, we can apply our changes. Run `terraform apply`, read through the changes and type `yes`.
+```
+terraform init
+terraform apply
+```
+
+Now we have succesfully created our first Terraform managed AWS infrastructure. 🥳
+This is the furthest our demo project continues, but you're very much welcome to fiddle with
+the infrastrcuture yourself at this point.
+
+## 4. Destroy infrastructure
+
+To avoid unnecessary costs, we'll destroy our infrastructure after we're done with it.
+```
+terraform destroy
+```
