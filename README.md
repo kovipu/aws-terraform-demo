@@ -1,6 +1,7 @@
 # aws-terraform-demo
 
-A simple AWS + Terraform demo.
+This is a simple demo for AWS with Terraform managed state. In this example, we'll walk through
+setting up AWS and Terraform, building infrastructure with it, refactoring and finally destroying it.
 
 For this demo, you'll need
 * A computer running macOS, Linux or Windows
@@ -63,14 +64,39 @@ terraform init
 Now we are ready to build AWS infrastructure using Terraform.
 In this example, we'll be creating an EC2-instance and allowing SSH-access to it.
 
-Add the following configuration to `main.tf`.
+Let's create EC2-instance module for a nice low verbosity way to launch ec2-instances.
+
+Create a new directory `modules/ec2-instance` and in that directory a new file `modules/ec2-instance/main.tf`.
+Add the following into the new file.
 ```hcl
+variable "ami" {
+  description = "Amazon Machine Image for the instance. Default: Ubuntu 20.04."
+  default     = "ami-06982ac8da9099c13"
+}
+
+variable "instance_type" {
+  description = "Instance type for the machine."
+  default     = "t3.micro"
+}
+
+variable "instance_name" {
+  description = "Name for the instance."
+}
+
 resource "aws_instance" "instance" {
-  ami           = "ami-06982ac8da9099c13"
-  instance_type = "t3.micro"
+  ami            = var.ami
+  instance_type  = var.instance_type
 
   tags = {
-    Name = "ExampleInstance"
+    Name = var.instance_name
   }
+}
+```
+
+Add module initialization into the root `main.tf` file.
+```hcl
+module "example_instane" {
+  source        = "./modules/ec2-instance"
+  instance_name = "ExampleInstance"
 }
 ```
