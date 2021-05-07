@@ -22,3 +22,38 @@ Configure AWS CLI with your Access Key.
 ```
 aws configure
 ```
+
+### 2. Initialize the Terraform project.
+
+#### Set up a new directory for the project
+
+Initialize a new Terraform project in a new directory.
+```
+mkdir terraform-demo && cd terraform-demo
+```
+
+#### Add an AWS provider
+
+Create a `main.tf` file, and add the following.
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.27"
+    }
+  }
+
+  required_version = ">= 0.14.9"
+}
+
+provider "aws" {
+  profile = "default"
+  region  = "eu-north-1" # stockholm
+}
+```
+
+Then initialize your prodect to install the provider.
+```
+terraform init
+```
