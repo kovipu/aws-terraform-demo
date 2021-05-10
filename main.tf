@@ -14,7 +14,7 @@ provider "aws" {
   region  = "eu-north-1"
 }
 
-module "example_instane" {
+module "example_instance" {
   source        = "./modules/ec2-instance"
   instance_name = "example_instance"
 }
